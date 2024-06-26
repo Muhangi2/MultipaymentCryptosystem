@@ -1,11 +1,12 @@
-const { ethers } = require("hardhat");
+const hre = require("hardhat");
+
 async function main() {
   const [deployer] = await ethers.getSigners();
   console.log("Deploying contracts with the account:", deployer.address);
 
-  const Multipayment = await ethers.getContractFactory("Multipayment");
+  const Multipayment = await hre.ethers.getContractFactory("Multipayment");
   const multipayment = await Multipayment.deploy();
-  await multipayment.deployed();
+  // await multipayment.deployed();
 
   console.log("Multipayment deployed to:", multipayment.address);
 }
