@@ -23,7 +23,7 @@ const Transactions: React.FC = () => {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(false);
   const [transactions, setTransactions] = useState<boolean>(false);
-  const [blockcahinExplorer, SetBlockChainExplorer] = useState(undefined);
+  // const [blockcahinExplorer, SetBlockChainExplorer] = useState(undefined);
 
   const SendPayments = async () => {
     if (payments.length === 0) {
@@ -45,7 +45,7 @@ const Transactions: React.FC = () => {
     const { recipients, amounts, total } = payments.reduce(
       (acc: PaymentAccumulator, val) => {
         acc.recipients.push(val.recipient as any);
-        acc.amounts.push(val.amount as any);
+        acc.amounts.push(Number(val.amount as any));
         acc.total += parseInt(val.amount as any);
         return acc;
       },
@@ -105,45 +105,6 @@ const Transactions: React.FC = () => {
         {transactions && (
           <div className="alert alert-success mt-4 mb-0">
             You have sent money successfully
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">CSV Uploader</h2>
-        <Importer
-          dataHandler={(rows) => setPayments(rows)}
-          defaultNoHeader={false}
-          restartable={false}
-        >
-          <ImporterField name="recipient" label="recipient" />
-          <ImporterField name="amount" label="amount" />
-          <ImporterField name="currency" label="currency" />
-        </Importer>
-        <button
-          className="btn btn-primary mt-5"
-          onClick={SendPayments}
-          disabled={sending || payments.length === 0}
-        >
-          Send Payments
-        </button>
-        {sending && (
-          <div className="alert alert-info  mt-4 mb-0">
-            Your payments are processing
-          </div>
-        )}
-        {error && (
-          <div className="alert alert-danger mt-4 mb-0">
-            Opps there is something wrog
-          </div>
-        )}
-        {transactions && (
-          <div className="alert alert-danger mt-4  mb-0">
-            You have sent money sucessfully{" "}
           </div>
         )}
       </div>
